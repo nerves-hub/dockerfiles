@@ -7,6 +7,8 @@ RUN \
      ca-certificates \
      curl \
      gnupg2 \
+     awscli \
+     jq \
      software-properties-common \
     && curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
     && add-apt-repository \
