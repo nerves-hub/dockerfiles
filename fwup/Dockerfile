@@ -12,28 +12,36 @@ RUN apk add --no-cache \
   automake \
   libtool \
   curl \
-  make
+  make \
+  libarchive-dev \
+  confuse-dev \
+  libsodium-dev
 
-# Add runtime tools
+# Add tools needed for testing
 RUN apk add --no-cache \
   dosfstools \
   mtools \
   zip \
   unzip
 
+RUN addgroup -g 1000 fwup && \
+    adduser -D -u 1000 -G fwup fwup
+
+USER fwup
+WORKDIR /home/fwup
+
 RUN curl -sL https://github.com/fhunleth/fwup/archive/v$FWUP_VERSION.tar.gz | tar xz \
   && mv fwup-$FWUP_VERSION fwup
 
-WORKDIR /fwup
+WORKDIR /home/fwup/fwup
 
 RUN \
-  ./scripts/download_deps.sh \
-  && ./scripts/build_deps.sh \
-  && ./autogen.sh \
+  ./autogen.sh \
   && PKG_CONFIG_PATH=./build/host/deps/usr/lib/pkgconfig ./configure --enable-shared=no
 
 RUN make
-#RUN make check
+RUN make check
+USER root
 RUN make install
 
 FROM alpine:3.8
