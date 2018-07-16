@@ -24,16 +24,10 @@ RUN apk add --no-cache \
   zip \
   unzip
 
-RUN addgroup -g 1000 fwup && \
-    adduser -D -u 1000 -G fwup fwup
-
-USER fwup
-WORKDIR /home/fwup
-
 RUN curl -sL https://github.com/fhunleth/fwup/archive/v$FWUP_VERSION.tar.gz | tar xz \
   && mv fwup-$FWUP_VERSION fwup
 
-WORKDIR /home/fwup/fwup
+WORKDIR /fwup
 
 RUN \
   ./autogen.sh \
@@ -41,7 +35,6 @@ RUN \
 
 RUN make
 RUN make check
-USER root
 RUN make install
 
 FROM alpine:3.8
