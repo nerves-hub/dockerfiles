@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.9
 
 ARG AWS_CLI_VERSION=1.15.56
 
@@ -17,6 +17,6 @@ RUN apk add --no-cache \
 
 RUN curl -o /usr/local/bin/ecs-deploy \
       https://raw.githubusercontent.com/nerves-hub/ecs-deploy/develop/ecs-deploy \
-    && chmod +x /usr/local/bin/ecs-deploy  
+    && chmod +x /usr/local/bin/ecs-deploy
 
 CMD ["bash"]
