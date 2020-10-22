@@ -1,18 +1,18 @@
 # Release Container
-FROM alpine:3.9 as release
+FROM alpine:3.12.0 as release
 
 ENV MIX_ENV=prod
 ENV REPLACE_OS_VARS true
 ENV LC_ALL=en_US.UTF-8
 ENV AWS_ENV_SHA=1393537837dc67d237a9a31c8b4d3dd994022d65e99c1c1e1968edc347aae63f
 
-ARG AWS_CLI_VERSION=1.15.56
+ARG AWS_CLI_VERSION=1.18.162
 RUN apk --no-cache add \
   bash \
   libcrypto1.1 \
   openssl \
   curl \
-  python \
+  python3 \
   py-pip \
   jq \
   && pip install --no-cache-dir awscli==$AWS_CLI_VERSION
