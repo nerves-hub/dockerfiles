@@ -1,4 +1,4 @@
-FROM alpine:3.12.0
+FROM alpine:3.12.1
 
 ARG AWS_CLI_VERSION=1.18.162
 
